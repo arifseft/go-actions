@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/arifseft/go-actions/app"
@@ -20,5 +21,7 @@ func main() {
 	migration.Migrate(db)
 
 	port := os.Getenv("APP_PORT")
-	r.Run(":" + port)
+	if err := r.Run(":" + port); err != nil {
+		fmt.Printf(err.Error())
+	}
 }

@@ -14,4 +14,7 @@ kill-port:
 	@echo "Port 8080 is killed"
 
 test:
-	@go test ./__test__/ -v
+	@go test ./__test__/ -v -coverage=./... -coverprofile=coverage.out
+	@go tool cover -func=coverage.out
+	@go tool cover -html=coverage.out
+	@rm -f coverage.out

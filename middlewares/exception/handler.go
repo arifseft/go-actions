@@ -9,17 +9,17 @@ import (
 
 func ErrorHandler(c *gin.Context, err interface{}) {
 	res := Exception{}
-	mapstructure.Decode(err, &res)
-
-	c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-		"status": res.Status,
-		"flag":   res.Flag,
-		"errors": map[string]interface{}{
-			"message": res.Errors.Message,
-			"flag":    res.Errors.Flag,
-		},
-	})
-	return
+	if err := mapstructure.Decode(err, &res); err != nil {
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
+			"status": http.StatusInternalServerError,
+			"flag":   "INTERNAL_SERVER_ERROR",
+			"errors": map[string]interface{}{
+				"message": "An error occured on our server",
+				"flag":    "ERROR_MAP_TO_STRUCT",
+			},
+		})
+		return
+	}
 }
 
 type Exception struct {
