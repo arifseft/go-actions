@@ -6,6 +6,7 @@ import (
 )
 
 func Router(g *echo.Group) {
-	g.GET("/name", controllers.GetName)
-	g.GET("/biodata", controllers.GetBiodata)
+	controller := controllers.UserController{}
+	g.GET("/name", controller.GetName)
+	g.GET("/biodata", controller.GetBiodata)
 }

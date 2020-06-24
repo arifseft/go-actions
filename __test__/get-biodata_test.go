@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	"github.com/arifseft/go-actions/controllers"
+	"github.com/arifseft/go-actions/global/types"
 	"github.com/labstack/echo/v4"
 	"github.com/stretchr/testify/assert"
 )
@@ -18,11 +19,12 @@ func TestGetBiodata(t *testing.T) {
 	c := e.NewContext(req, rec)
 	c.SetPath("/user/biodata")
 
-	if assert.NoError(t, controllers.GetBiodata(c)) {
+	controller := controllers.UserController{}
+	if assert.NoError(t, controller.GetBiodata(c)) {
 		expect := `{"status":200,"message":"Success to get biodata","result":{"name":"M Arif Sefrianto","address":"Lubuklinggau"}}`
 
-		res := controllers.GetBiodataResponse{}
-		mock := controllers.GetBiodataResponse{}
+		res := types.GetBiodataResponse{}
+		mock := types.GetBiodataResponse{}
 
 		if err := json.Unmarshal([]byte(rec.Body.String()), &res); err != nil {
 			panic(err)

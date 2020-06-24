@@ -3,27 +3,16 @@ package controllers
 import (
 	"net/http"
 
+	"github.com/arifseft/go-actions/global/types"
 	"github.com/arifseft/go-actions/utils"
 	"github.com/labstack/echo/v4"
 )
 
-type GetNameResponse struct {
-	utils.Response
-	Result string `json:"result"`
+type UserController struct {
 }
 
-type GetBiodataResult struct {
-	Name    string `json:"name"`
-	Address string `json:"address"`
-}
-
-type GetBiodataResponse struct {
-	utils.Response
-	Result GetBiodataResult `json:"result"`
-}
-
-func GetName(c echo.Context) error {
-	name := GetNameResponse{
+func (u UserController) GetName(c echo.Context) error {
+	name := types.GetNameResponse{
 		Result: "M Arif Sefrianto",
 		Response: utils.Response{
 			Status:  http.StatusOK,
@@ -34,13 +23,13 @@ func GetName(c echo.Context) error {
 	return c.JSON(http.StatusOK, name)
 }
 
-func GetBiodata(c echo.Context) error {
-	biodata := GetBiodataResponse{
+func (u UserController) GetBiodata(c echo.Context) error {
+	biodata := types.GetBiodataResponse{
 		Response: utils.Response{
 			Status:  http.StatusOK,
 			Message: "Success to get biodata",
 		},
-		Result: GetBiodataResult{
+		Result: types.GetBiodataResult{
 			Name:    "M Arif Sefrianto",
 			Address: "Lubuklinggau",
 		},
