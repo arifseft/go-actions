@@ -2,14 +2,20 @@ package main
 
 import (
 	"github.com/arifseft/go-actions/app"
-	"github.com/labstack/echo/v4"
+	"github.com/arifseft/go-actions/database"
+	"github.com/arifseft/go-actions/database/migration"
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	e := echo.New()
+	r := gin.Default()
 
 	app := new(app.Application)
-	app.CreateApp(e)
+	app.CreateApp(r)
 
-	e.Logger.Fatal(e.Start(":8080"))
+	database.Connection()
+	db := database.GetDB()
+	migration.Migrate(db)
+
+	r.Run()
 }

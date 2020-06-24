@@ -1,39 +1,56 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 
+	"github.com/arifseft/go-actions/database/entity"
 	"github.com/arifseft/go-actions/global/types"
-	"github.com/arifseft/go-actions/utils"
-	"github.com/labstack/echo/v4"
+	"github.com/gin-gonic/gin"
 )
 
 type UserController struct {
 }
 
-func (u UserController) GetName(c echo.Context) error {
-	name := types.GetNameResponse{
-		Result: "M Arif Sefrianto",
-		Response: utils.Response{
-			Status:  http.StatusOK,
-			Message: "Success get name",
-		},
-	}
-
-	return c.JSON(http.StatusOK, name)
+func (u UserController) GetName(c *gin.Context) {
+	name := "M Arif Sefrianto"
+	c.JSON(http.StatusOK, gin.H{
+		"status":  http.StatusOK,
+		"message": "Success get name",
+		"result":  name,
+	})
 }
 
-func (u UserController) GetBiodata(c echo.Context) error {
-	biodata := types.GetBiodataResponse{
-		Response: utils.Response{
-			Status:  http.StatusOK,
-			Message: "Success to get biodata",
-		},
-		Result: types.GetBiodataResult{
-			Name:    "M Arif Sefrianto",
-			Address: "Lubuklinggau",
-		},
+func (u UserController) GetBiodata(c *gin.Context) {
+	biodata := types.GetBiodataResult{
+		Name:    "M Arif Sefrianto",
+		Address: "Lubuklinggau",
 	}
 
-	return c.JSON(http.StatusOK, biodata)
+	c.JSON(http.StatusOK, gin.H{
+		"status":  http.StatusOK,
+		"message": "Success get biodata",
+		"result":  biodata,
+	})
+}
+
+func (u UserController) CreateUser(c *gin.Context) {
+	user := new(entity.User)
+	if err := c.Bind(&user); err != nil {
+		fmt.Println(err)
+	}
+
+	data := types.CreateUserResult{
+		ID:      user.ID,
+		Name:    user.Name,
+		Age:     user.Age,
+		Email:   user.Email,
+		Address: user.Address,
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"status":  http.StatusOK,
+		"message": "Success create user",
+		"result":  data,
+	})
 }

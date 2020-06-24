@@ -1,19 +1,20 @@
 package app
 
 import (
+	"github.com/arifseft/go-actions/middlewares/exception"
 	"github.com/arifseft/go-actions/routes"
-	"github.com/labstack/echo/v4"
+	"github.com/gin-gonic/gin"
 )
 
 type Application struct {
 }
 
-func (a Application) CreateApp(e *echo.Echo) {
-	configureAPIEndpoint(e)
+func (a Application) CreateApp(r *gin.Engine) {
+	r.Use(exception.Recovery(exception.ErrorHandler))
+	configureAPIEndpoint(r)
 }
 
-func configureAPIEndpoint(e *echo.Echo) {
-	g := e.Group("/user")
+func configureAPIEndpoint(r *gin.Engine) {
+	g := r.Group("/user")
 	routes.Router(g)
-
 }

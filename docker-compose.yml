@@ -2,14 +2,13 @@ version: '3.7'
 
 services: 
     production:
-        hostname: app-production
+        hostname: go_actions_production
         restart: unless-stopped
         build:
             context: .
             dockerfile: Dockerfile
-            target: base
+            target: prod
         environment:
-            GIN_MODE: "release"
             SERVING_PORT: "*:8080"
         volumes: 
             - .:/app
@@ -18,7 +17,10 @@ services:
         command: bash -c "go mod download & go build -o /bin/app . && /bin/app"
 
     development:
-        hostname: app-development
+        hostname: go_actions_development
+        container_name: go_actions_development
+        depends_on: 
+            - postgres
         restart: unless-stopped
         build:
             context: .
@@ -27,9 +29,35 @@ services:
         environment:
             DEBUG: "true"
             SERVING_PORT: "*:8080"
+            DB_HOST: localhost
         volumes: 
             - .:/app
         working_dir: /app
         ports:
             - "8080:8080"
-        command: bash -c "go mod download & make serve"
+        command: bash -c "go mod download & make watch"
+        env_file:
+            - .env
+        network_mode: host
+
+    postgres:
+        image: postgres:11
+        container_name: go_actions_db
+        volumes:
+            - go_actions:/var/libs/postgresql/data
+        environment:
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=developer
+            - POSTGRES_DB=go_actions_db
+            - POSTGRES_PORT=5432
+        ports:
+            - 5432:5432
+        networks:
+            - net
+
+volumes:
+    go_actions:
+
+networks:
+    net:
+        driver: bridge
