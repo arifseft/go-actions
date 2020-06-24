@@ -1,11 +1,11 @@
 package controllers
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/arifseft/go-actions/database/entity"
 	"github.com/arifseft/go-actions/global/types"
+	"github.com/arifseft/go-actions/validation"
 	"github.com/gin-gonic/gin"
 )
 
@@ -35,10 +35,11 @@ func (u UserController) GetBiodata(c *gin.Context) {
 }
 
 func (u UserController) CreateUser(c *gin.Context) {
-	user := new(entity.User)
-	if err := c.Bind(&user); err != nil {
-		fmt.Println(err)
-	}
+	var user entity.User
+	c.BindJSON(&user)
+
+	userValidate := &validation.CreateUserSchema{Name: user.Name}
+	validation.Validate(userValidate)
 
 	data := types.CreateUserResult{
 		ID:      user.ID,

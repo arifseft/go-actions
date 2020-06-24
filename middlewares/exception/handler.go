@@ -12,11 +12,11 @@ func ErrorHandler(c *gin.Context, err interface{}) {
 	mapstructure.Decode(err, &res)
 
 	c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-		"status": http.StatusBadRequest,
-		"flag":   "BAD_REQUEST",
+		"status": res.Status,
+		"flag":   res.Flag,
 		"errors": map[string]interface{}{
 			"message": res.Errors.Message,
-			"flag":    res.Errors.Message,
+			"flag":    res.Errors.Flag,
 		},
 	})
 	return

@@ -1,6 +1,8 @@
 package main
 
 import (
+	"os"
+
 	"github.com/arifseft/go-actions/app"
 	"github.com/arifseft/go-actions/database"
 	"github.com/arifseft/go-actions/database/migration"
@@ -17,5 +19,6 @@ func main() {
 	db := database.GetDB()
 	migration.Migrate(db)
 
-	r.Run()
+	port := os.Getenv("APP_PORT")
+	r.Run(":" + port)
 }

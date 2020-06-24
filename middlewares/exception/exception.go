@@ -8,7 +8,7 @@ func BadRequest(message string, flag string) {
 
 	response := map[string]interface{}{
 		"status": 400,
-		"flag":   "INVALID_BODY",
+		"flag":   "BAD_REQUEST",
 		"errors": errors,
 	}
 

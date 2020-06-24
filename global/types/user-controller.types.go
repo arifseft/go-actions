@@ -25,7 +25,7 @@ type CreateUserResult struct {
 	Address string `json:"address"`
 }
 
-type CreateUser struct {
+type CreateUserResponse struct {
 	utils.Response
 	Result CreateUserResult `json:"result"`
 }
