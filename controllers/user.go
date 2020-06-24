@@ -37,11 +37,11 @@ func GetName(c echo.Context) error {
 func GetBiodata(c echo.Context) error {
 	biodata := GetBiodataResponse{
 		Response: utils.Response{
-			Status: http.StatusOK,
+			Status:  http.StatusOK,
 			Message: "Success to get biodata",
 		},
 		Result: GetBiodataResult{
-			Name: "M Arif Sefrianto",
+			Name:    "M Arif Sefrianto",
 			Address: "Lubuklinggau",
 		},
 	}
