@@ -1,0 +1,4 @@
+ignore:
+  app/application.go
+  database/connection.go
+  database/migration/
