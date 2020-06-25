@@ -1,13 +1,13 @@
 package main
 
 import (
-	"fmt"
 	"os"
 
 	"github.com/arifseft/go-actions/app"
 	"github.com/arifseft/go-actions/database"
 	"github.com/arifseft/go-actions/database/migration"
 	"github.com/gin-gonic/gin"
+	"github.com/jpoles1/gopherbadger/logging"
 )
 
 func main() {
@@ -22,6 +22,6 @@ func main() {
 
 	port := os.Getenv("APP_PORT")
 	if err := r.Run(":" + port); err != nil {
-		fmt.Printf(err.Error())
+		logging.Error("APP", err)
 	}
 }
