@@ -2,6 +2,8 @@
 
 ![lint](https://github.com/arifseft/go-actions/workflows/lint/badge.svg?branch=master)
 ![lint](https://github.com/arifseft/go-actions/workflows/test/badge.svg?branch=master)
+![lint](https://github.com/arifseft/go-actions/workflows/build/badge.svg?branch=master)
+![lint](https://github.com/arifseft/go-actions/workflows/coverage/badge.svg?branch=master)
 
 ## How to run
 
