@@ -21,8 +21,8 @@ jobs:
       - name: Build
         run: |
           export GO111MODULE=on
-          GOOS=windows GOARCH=amd64 go build -o bin/ci-test-windows-amd64.exe ./src
-          GOOS=linux   GOARCH=amd64 go build -o bin/ci-test-linux-amd64 ./src
+          GOOS=windows GOARCH=amd64 go build -o bin/ci-test-windows-amd64.exe .
+          GOOS=linux   GOARCH=amd64 go build -o bin/ci-test-linux-amd64 .
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@master
